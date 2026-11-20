@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Task Manager" %></title>
+    <title><%= content_for(:title) || "TASKORA" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Task Manager">
@@ -23,7 +23,15 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="min-h-screen bg-white text-black flex flex-col">
+
+  <%= render "shared/navbar" %>
+
+  <main class="flex-grow">
     <%= yield %>
-  </body>
+  </main>
+
+  <%= render "shared/footer" %>
+
+</body>
 </html>
