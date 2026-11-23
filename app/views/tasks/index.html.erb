@@ -1,23 +1,85 @@
-<p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Tasks" %>
 
-<h1 class="text 3x1 font-bold text-blue-600">Tailwind!!</h1>
+<div class="min-h-screen bg-white px-5 py-12 sm:px-8">
+  <div class="max-w-6xl mx-auto">
 
-<h1>Tasks</h1>
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 mb-10">
+      <div>
+        <p class="text-sm text-gray-500 font-medium tracking-wide uppercase">
+          Personal Workspace
+        </p>
 
-<div id="tasks">
-  <% if @tasks.any? %>
-   <% @tasks.each do |task| %>
-    <%= render task %>
-    <p>
-      <%= link_to "Show this task", task %>
-    </p>
-   <% end %>
-   <% else %>
-   <p> No task available.</p>
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mt-2">
+          My Tasks
+        </h1>
 
-   <% end %>  
+        <p class="text-gray-500 mt-2">
+          Organize your work and keep track of your daily activities.
+        </p>
+      </div>
+
+      <%= link_to new_task_path,
+          class: "inline-flex items-center justify-center px-6 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition" do %>
+        + Create New Task
+      <% end %>
+    </div>
+
+    <!-- Notice -->
+    <% if notice.present? %>
+      <div class="mb-6 p-4 rounded-lg bg-gray-50 border border-gray-200 text-sm text-gray-700">
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <!-- Tasks Container -->
+    <div class="border border-gray-200 rounded-xl overflow-hidden">
+
+      <div class="px-6 py-5 border-b border-gray-200 flex items-center justify-between">
+        <h2 class="font-semibold text-lg">All Tasks</h2>
+
+        <span class="text-sm text-gray-500">
+          <%= pluralize(@tasks.count, "task") %>
+        </span>
+      </div>
+
+      <div id="tasks" class="divide-y divide-gray-200">
+
+        <% if @tasks.any? %>
+
+          <% @tasks.each do |task| %>
+            <div class="p-6 hover:bg-gray-50 transition">
+              <%= render task %>
+
+              <div class="mt-4">
+                <%= link_to "View Details",
+                    task,
+                    class: "text-sm font-medium text-gray-700 hover:text-black transition" %>
+              </div>
+            </div>
+          <% end %>
+
+        <% else %>
+
+          <div class="px-6 py-16 text-center">
+            <h3 class="text-lg font-semibold text-gray-800">
+              No tasks yet
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-2">
+              Start organizing your work by creating your first task.
+            </p>
+
+            <%= link_to "Create Your First Task",
+                new_task_path,
+                class: "inline-block mt-6 px-5 py-2.5 bg-black text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition" %>
+          </div>
+
+        <% end %>
+
+      </div>
+    </div>
+
+  </div>
 </div>
-
-<%= link_to "New task", new_task_path %>
