@@ -1,22 +1,27 @@
 <nav class="flex items-center justify-between px-6 sm:px-8 py-6 border-b border-gray-200">
   <%= link_to root_path, class: "flex items-center gap-2" do %>
-  
-   <span class="text-2xl font-bold">
-  TASK<span class="text-gray-400">ORA</span>
-</span>
+    <span class="text-2xl font-bold">
+      TASK<span class="text-gray-400">ORA</span>
+    </span>
   <% end %>
 
   <div class="flex items-center gap-4 sm:gap-8">
-    <a href="/" class="text-sm font-medium hover:text-gray-500">
-      Home
-    </a>
+    <%= link_to "Home", root_path, class: "text-sm font-medium hover:text-gray-500" %>
 
-    <a href="#features" class="text-sm font-medium hover:text-gray-500">
-      Features
-    </a>
+    <%= link_to "Features", root_path(anchor: "features"), class: "text-sm font-medium hover:text-gray-500" %>
 
-    <a href="/tasks" class="text-sm font-medium hover:text-gray-500">
-      Tasks
-    </a>
+    <% if user_signed_in? %>
+      <%= link_to "Tasks", tasks_path, class: "text-sm font-medium hover:text-gray-500" %>
+
+      <%= button_to "Log Out", destroy_user_session_path,
+          method: :delete,
+          class: "text-sm font-medium hover:text-red-500",
+          form: { class: "inline" } %>
+    <% else %>
+      <%= link_to "Sign In", new_user_session_path, class: "text-sm font-medium hover:text-gray-500" %>
+
+      <%= link_to "Sign Up", new_user_registration_path,
+          class: "text-sm font-medium bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-700" %>
+    <% end %>
   </div>
 </nav>

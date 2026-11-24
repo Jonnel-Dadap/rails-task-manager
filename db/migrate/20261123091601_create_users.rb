@@ -1,11 +1,11 @@
-class CreateUsers < ActiveRecord::Migration[8.1]
-  def change
-    create_table :users do |t|
-      t.string :username
-      t.string :email
-      t.string :password_digest
+# frozen_string_literal: true
 
-      t.timestamps
-    end
+class AddDeviseToUsers < ActiveRecord::Migration[8.1]
+  def change
+    add_column :users, :reset_password_token, :string
+    add_column :users, :reset_password_sent_at, :datetime
+    add_column :users, :remember_created_at, :datetime
+
+    add_index :users, :reset_password_token, unique: true
   end
 end
