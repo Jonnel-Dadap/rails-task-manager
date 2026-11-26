@@ -52,11 +52,13 @@
             <div class="p-6 hover:bg-gray-50 transition">
               <%= render task %>
 
-              <div class="mt-4">
-                <%= link_to "View Details",
-                    task,
-                    class: "text-sm font-medium text-gray-700 hover:text-black transition" %>
-              </div>
+              <div class="mt-5 pt-4 border-t border-gray-100">
+  <%= link_to task,
+      class: "inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-blue-950 transition group" do %>
+    View Task Details
+    <span class="transition-transform group-hover:translate-x-1">→</span>
+  <% end %>
+</div>
             </div>
           <% end %>
 

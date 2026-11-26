@@ -1,19 +1,27 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
-  def index
-    @tasks = current_user.tasks
-  end
+ def index
+  @tasks = current_user.tasks.where(archived: false)
+ end
+
+ def archive
+  @tasks = current_user.tasks.where(archived: true)
+ end
 
   def show
   end
 
+  def edit
+  end
+
   def new
-    @task = current_user.tasks.build
+    @task = current_user.tasks.build # build creates an object
+    # hindi pa i sasave sa Db
   end
 
   def create
-    @task = current_user.tasks.build(task_params)
+    @task = current_user.tasks.build(task_params) # create task object
 
     respond_to do |format|
       if @task.save
@@ -47,6 +55,23 @@ class TasksController < ApplicationController
     end
   end
 
+  def archive_task
+  @task = current_user.tasks.find(params[:id])
+
+   if @task.update(archived: true)
+     redirect_to tasks_path, notice: "Task archived successfully."
+   else
+     render :show, status: :unprocessable_entity
+   end
+  end
+
+  def restore
+    @task = current_user.tasks.find(params[:id])
+    @task.update(archived: false)
+
+    redirect_to archive_tasks_path, notice: "Task restored successfully."
+  end
+
   private
 
   def set_task
@@ -54,6 +79,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.expect(task: [ :title, :description, :completed ])
+    params.expect(task: [ :title, :description, :status ])
   end
 end

@@ -1,4 +1,3 @@
-
 <% content_for :title, "Task Details" %>
 
 <div class="min-h-screen bg-white px-5 py-12 sm:px-8">
@@ -19,6 +18,13 @@
       </p>
     </div>
 
+    <!-- Validation Errors -->
+    <% if @task.errors.any? %>
+      <div class="mb-6 p-4 rounded-lg border border-red-200 bg-red-50 text-sm text-red-700">
+        <%= @task.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
     <!-- Notice -->
     <% if notice.present? %>
       <div class="mb-6 p-4 rounded-lg border border-green-200 bg-green-50 text-sm text-green-700">
@@ -37,6 +43,13 @@
       <%= link_to "Edit Task",
           edit_task_path(@task),
           class: "px-6 py-3 bg-black text-white text-sm font-medium rounded-lg text-center hover:bg-gray-800 transition" %>
+
+      <% if @task.status == "Completed" && !@task.archived? %>
+        <%= button_to "Archive Task",
+            archive_task_path(@task),
+            method: :patch,
+            class: "px-6 py-3 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg text-center hover:bg-gray-100 transition cursor-pointer" %>
+      <% end %>
 
       <%= link_to "Back to Tasks",
           tasks_path,

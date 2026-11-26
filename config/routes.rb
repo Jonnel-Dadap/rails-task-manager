@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
+
   root "pages#home"
 
   get "/tasks", to: "tasks#index", as: :tasks
+  get "/tasks/archive", to: "tasks#archive", as: :archive_tasks
   get "/tasks/new", to: "tasks#new", as: :new_task
   post "/tasks", to: "tasks#create"
 
@@ -12,16 +14,9 @@ Rails.application.routes.draw do
   patch "/tasks/:id", to: "tasks#update"
   put "/tasks/:id", to: "tasks#update"
   delete "/tasks/:id", to: "tasks#destroy"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  patch "/tasks/:id/archive", to: "tasks#archive_task", as: :archive_task
+  patch "/tasks/:id/restore", to: "tasks#restore", as: :restore_task
+
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 end
