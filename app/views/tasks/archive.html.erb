@@ -12,6 +12,13 @@
       </p>
     </div>
 
+    <!-- Notice -->
+    <% if notice.present? %>
+      <div class="mb-6 p-4 rounded-lg bg-gray-50 border border-gray-200 text-sm text-gray-700">
+        <%= notice %>
+      </div>
+    <% end %>
+
     <% if @tasks.any? %>
       <div class="space-y-4">
         <% @tasks.each do |task| %>

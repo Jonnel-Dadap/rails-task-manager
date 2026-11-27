@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
+  before_action :prevent_archive_task, only: [ :show, :edit, :update ]
+  rescue_from ActiveRecord::RecordNotFound, with: :task_not_found
 
  def index
   @tasks = current_user.tasks.where(archived: false)
@@ -80,5 +82,15 @@ class TasksController < ApplicationController
 
   def task_params
     params.expect(task: [ :title, :description, :status ])
+  end
+
+  def prevent_archive_task
+    if @task.archived?
+      redirect_to archive_tasks_path, notice: "Archived task cannot be viewed or edited."
+    end
+  end
+
+  def task_not_found
+    redirect_to tasks_path, notice: "Task not found or you don't have permission to access it."
   end
 end
