@@ -1,28 +1,48 @@
-<nav class="flex items-center justify-between px-6 sm:px-8 py-6 border-b border-gray-200">
-  <%= link_to root_path, class: "flex items-center gap-2" do %>
-    <span class="text-2xl font-bold">
-      TASK<span class="text-gray-400">ORA</span>
-    </span>
-  <% end %>
 
-  <div class="flex items-center gap-4 sm:gap-8">
-    <%= link_to "Home", root_path, class: "text-sm font-medium hover:text-gray-500" %>
+<nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-6 sm:px-8 py-4">
 
-    <%= link_to "Features", root_path(anchor: "features"), class: "text-sm font-medium hover:text-gray-500" %>
-
-    <% if user_signed_in? %>
-      <%= link_to "My tasks", tasks_path, class: "text-sm font-medium hover:text-gray-500" %>
-      <%= link_to "Archive", archive_tasks_path, class: "text-sm font-medium hover:text-gray-500" %>
-
-      <%= button_to "Log Out", destroy_user_session_path,
-          method: :delete,
-          class: "text-sm font-medium hover:text-red-500",
-          form: { class: "inline" } %>
-    <% else %>
-      <%= link_to "Sign In", new_user_session_path, class: "text-sm font-medium hover:text-gray-500" %>
-
-      <%= link_to "Sign Up", new_user_registration_path,
-          class: "text-sm font-medium bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-700" %>
+    <%# Brand %>
+    <%= link_to root_path, class: "flex items-center gap-1 group" do %>
+      <span class="text-2xl font-extrabold tracking-tight text-gray-900">
+        TASK<span class="text-gray-400 group-hover:text-gray-600 transition-colors">ORA</span>
+      </span>
     <% end %>
+
+    <%# Navigation %>
+    <div class="flex items-center gap-2 sm:gap-6">
+
+      <%= link_to "Home", root_path,
+          class: "px-3 py-2 text-sm font-medium rounded-lg transition-colors #{current_page?(root_path) ? 'text-black bg-gray-100' : 'text-gray-500 hover:text-black hover:bg-gray-50'}" %>
+
+      <%= link_to "Features", root_path(anchor: "features"),
+          class: "px-3 py-2 text-sm font-medium text-gray-500 rounded-lg hover:text-black hover:bg-gray-50 transition-colors" %>
+
+      <% if user_signed_in? %>
+
+        <%= link_to "My Tasks", tasks_path,
+            class: "px-3 py-2 text-sm font-medium rounded-lg transition-colors #{current_page?(tasks_path) ? 'text-black bg-gray-100' : 'text-gray-500 hover:text-black hover:bg-gray-50'}" %>
+
+        <%= link_to "Archive", archive_tasks_path,
+            class: "px-3 py-2 text-sm font-medium rounded-lg transition-colors #{current_page?(archive_tasks_path) ? 'text-black bg-gray-100' : 'text-gray-500 hover:text-black hover:bg-gray-50'}" %>
+
+        <div class="h-6 w-px bg-gray-200 mx-1"></div>
+
+        <%= button_to "Log Out", destroy_user_session_path,
+            method: :delete,
+            class: "px-4 py-2 text-sm font-semibold text-gray-600 rounded-lg hover:text-red-600 hover:bg-red-50 transition-colors",
+            form: { class: "inline" } %>
+
+      <% else %>
+
+        <%= link_to "Sign In", new_user_session_path,
+            class: "px-3 py-2 text-sm font-semibold text-gray-600 rounded-lg hover:text-black transition-colors" %>
+
+        <%= link_to "Get Started", new_user_registration_path,
+            class: "px-5 py-2.5 text-sm font-semibold text-white bg-gray-900 rounded-lg hover:bg-gray-700 transition-all shadow-sm" %>
+
+      <% end %>
+
+    </div>
   </div>
 </nav>

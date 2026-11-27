@@ -68,10 +68,13 @@ class TasksController < ApplicationController
   end
 
   def restore
-    @task = current_user.tasks.find(params[:id])
-    @task.update(archived: false)
+  @task = current_user.tasks.find(params[:id])
 
+    if @task.update(archived: false)
     redirect_to archive_tasks_path, notice: "Task restored successfully."
+    else
+    redirect_to archive_tasks_path, alert: @task.errors.full_messages.to_sentence
+    end
   end
 
   private
